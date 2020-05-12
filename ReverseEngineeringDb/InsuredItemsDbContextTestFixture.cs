@@ -6,7 +6,7 @@ using ReverseEngineeringDb.DataContext;
 namespace ReverseEngineeringDb
 {
     [TestFixture]
-    public class Class1
+    public class InsuredItemsDbContextTestFixture
     {
 
         [Test]
