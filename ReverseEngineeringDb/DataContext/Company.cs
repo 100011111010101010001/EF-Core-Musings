@@ -6,14 +6,14 @@ namespace ReverseEngineeringDb.DataContext
     public class Company
     {
         [Key]
-        public int CompanyKey { get; set; }
+        public int Key { get; set; }
         [MaxLength(255)]
         public string CompanyName { get; set; }
-        public CompanyType CompanyTypes { get; set; }
+        public ICollection<CompanyCompanyType> CompanyCompanyTypes { get; set; }
 
         public Company()
         {
-           
+            CompanyCompanyTypes = new List<CompanyCompanyType>();
         }
     }
 }
