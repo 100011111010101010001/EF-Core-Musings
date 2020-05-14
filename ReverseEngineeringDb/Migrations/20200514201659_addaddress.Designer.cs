@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReverseEngineeringDb.DataContext;
 
 namespace ReverseEngineeringDb.Migrations
 {
     [DbContext(typeof(InsuredItemsDbContext))]
-    partial class InsuredItemsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200514201659_addaddress")]
+    partial class addaddress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

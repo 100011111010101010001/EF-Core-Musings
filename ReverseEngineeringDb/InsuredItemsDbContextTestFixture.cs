@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
@@ -12,6 +14,38 @@ namespace ReverseEngineeringDb
 
         private const string BinaryString = "10";
         private const string AllChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+
+        [Test]
+        public void TestAddAddressToCompany()
+        {
+            using (var db = new InsuredItemsDbContext())
+            {
+                foreach (var company in db.Companies)
+                {
+                    company.Address = new Address();
+                    company.Address.Country = RandomString(10, AllChars);
+                    company.Address.StreetName = RandomString(21, AllChars);
+                }
+
+                db.SaveChanges();
+            }
+        }
+
+        [Test]
+        public void TestGetCompaniesWithAddress()
+        {
+            IList<Company> list;
+            using (var db = new InsuredItemsDbContext())
+            {
+                list = db.Companies.Include(c => c.Address).Where(c => c.Address != null).ToList();
+            }
+
+            foreach (var company in list)
+            {
+                Console.WriteLine($"{company.CompanyName}    address:{company.Address.StreetName}");
+            }
+        }
 
         [Test]
         public void TestAddCompanyType()
