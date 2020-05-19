@@ -19,16 +19,4 @@ namespace ReverseEngineeringDb.DataContext
 
 
     }
-
-    public class Address
-    {
-        [Key]
-        public int CompanyKey { get; set; }
-        [MaxLength(100)]
-        public string StreetName { get; set; }
-        [MaxLength(100)]
-        public string Country { get; set; }
-
-        private Company Company { get; set; }
-    }
 }

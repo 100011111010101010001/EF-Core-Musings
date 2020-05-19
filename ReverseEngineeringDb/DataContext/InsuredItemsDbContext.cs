@@ -10,6 +10,8 @@ namespace ReverseEngineeringDb.DataContext
         public DbSet<Company> Companies { get; set; }
         public DbSet<CompanyType> CompanyTypes { get; set; }
 
+        public DbSet<Blog> Blogs { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -29,6 +31,7 @@ namespace ReverseEngineeringDb.DataContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Post>().ToTable("Posts");
             modelBuilder.Entity<CompanyCompanyType>().HasKey(c => new { c.CompanyKey, c.CompanyTypeKey });
         }
     }

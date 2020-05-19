@@ -21,9 +21,10 @@ namespace ReverseEngineeringDb
         {
             using (var db = new InsuredItemsDbContext())
             {
-                foreach (var company in db.Companies)
+                foreach (var company in db.Companies.Include(c => c.Address))
                 {
-                    company.Address = new Address();
+                    if (company.Address == null)
+                        company.Address = new Address();
                     company.Address.Country = RandomString(10, AllChars);
                     company.Address.StreetName = RandomString(21, AllChars);
                 }
