@@ -17,9 +17,35 @@ namespace ReverseEngineeringDb
 
 
         [Test]
+        public void TestAddCompanies()
+        {
+            Console.WriteLine();
+            using (var db = new InsuredItemsDbContext(new DbContextOptionsBuilder<InsuredItemsDbContext>().UseLoggerFactory(InsuredItemsDbContext.MyLoggerFactory).UseInMemoryDatabase("TestDb").Options))
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    var company = new Company();
+                    company.CompanyName = RandomString(51, AllChars);
+                    db.Companies.Add(company);
+                    db.SaveChanges();
+
+                }
+            }
+
+            using (var db = new InsuredItemsDbContext(new DbContextOptionsBuilder<InsuredItemsDbContext>().UseLoggerFactory(InsuredItemsDbContext.MyLoggerFactory).UseInMemoryDatabase("TestDb").Options))
+            {
+                foreach (var company in db.Companies)
+                {
+                    Console.WriteLine($"{company.CompanyName}");
+                }
+            }
+        }
+
+        [Test]
         public void TestAddAddressToCompany()
         {
-            using (var db = new InsuredItemsDbContext())
+            Console.WriteLine();
+            using (var db = new InsuredItemsDbContext(new DbContextOptionsBuilder<InsuredItemsDbContext>().UseInMemoryDatabase("TestDb").Options))
             {
                 foreach (var company in db.Companies.Include(c => c.Address))
                 {
@@ -51,7 +77,7 @@ namespace ReverseEngineeringDb
         [Test]
         public void TestAddCompanyType()
         {
-            var dbcontext = new InsuredItemsDbContext();
+            var dbcontext = new InsuredItemsDbContext(new DbContextOptionsBuilder<InsuredItemsDbContext>().UseInMemoryDatabase("TestDb").Options);
 
             for (int i = 0; i < 100; i++)
             {
@@ -66,7 +92,8 @@ namespace ReverseEngineeringDb
         [Test]
         public void TestAddCompanyToCompanyType()
         {
-            var db = new InsuredItemsDbContext();
+            Console.WriteLine();
+            var db = new InsuredItemsDbContext(new DbContextOptionsBuilder<InsuredItemsDbContext>().UseInMemoryDatabase("TestDb").Options);
             foreach (var companyType in db.CompanyTypes)
             {
                 var company = new Company();

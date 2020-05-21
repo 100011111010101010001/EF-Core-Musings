@@ -1,11 +1,19 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace ReverseEngineeringDb.DataContext
 {
     public class InsuredItemsDbContext : DbContext
     {
+        public static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(Configure);
+
+
+        private static void Configure(ILoggingBuilder builder)
+        {
+            builder.AddConsole();
+        }
 
         public DbSet<Company> Companies { get; set; }
         public DbSet<CompanyType> CompanyTypes { get; set; }
@@ -13,10 +21,20 @@ namespace ReverseEngineeringDb.DataContext
         public DbSet<Blog> Blogs { get; set; }
 
 
+        public InsuredItemsDbContext(DbContextOptions<InsuredItemsDbContext> options) : base(options)
+        {
+
+        }
+
+        public InsuredItemsDbContext() : base(new DbContextOptionsBuilder<InsuredItemsDbContext>().UseLoggerFactory(MyLoggerFactory).UseSqlServer($"Data Source=localhost;Initial Catalog={dbname};Persist Security Info=True;User ID=sa;Password=sa;MultipleActiveResultSets=True;App=EntityFramework").Options)
+        {
+
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            optionsBuilder.UseSqlServer($"Data Source=localhost;Initial Catalog={dbname};Persist Security Info=True;User ID=sa;Password=sa;MultipleActiveResultSets=True;App=EntityFramework");
+
 
         }
 
